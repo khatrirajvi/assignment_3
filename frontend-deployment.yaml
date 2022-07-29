@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontendapplication
+  labels:
+    name: guesthouse
+    component: frontendhouse
+spec:
+  selector:
+    matchLabels:
+      name: guesthouse
+      component: frontendhouse
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        name: guesthouse
+        component: frontendhouse
+    spec:
+      containers:
+      - name: guesthouse
+        image: paulczar/gb-frontend:v5
+        resources:
+          requests:
+            cpu: 100m
+            memory: 100Mi
+        env:
+        - name: GET_HOSTS_FROM
+          value: dns
+        ports:
+        - containerPort: 80
